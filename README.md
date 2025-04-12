@@ -102,7 +102,7 @@ def test_feature():
 
 ---
 
-## 📁 Folder Structure
+## 📁 Project Structure
 
 ```
 project_root/
@@ -111,6 +111,8 @@ project_root/
 │   └── test_api.py
 ├── fixtures/
 │   └── common_fixtures.py
+├── reports/
+│   └── test_report.html
 ├── conftest.py
 ├── requirements.txt
 └── README.md
