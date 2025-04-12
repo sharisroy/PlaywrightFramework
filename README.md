@@ -1,32 +1,122 @@
-1. pip3 install pytest
-2. pip install pytest-playwright
-3. playwright install
-4. pip install pytest-xdist - The pytest-xdist plugin extends pytest with new test execution modes, the most used being distributing tests across multiple CPUs to speed up test execution
+# Playwright API Testing with Pytest
 
+This project uses **Playwright** with **Pytest** for automated API testing. It supports structured test execution, fixtures, markers, parallel testing, and generates reports for further investigation.
 
-## How to run from comment line
+---
 
-1. All test case file - pytest -s
-2. Single File - pytest file_name
-3. Single Module - pytest file_name::module_name
-4. Run using test Name - @pytest.mark.test_name -v (smoke, regression)
-5. Run using test method name - pytest -k part_of_method_name
-6. Run headed browser - pytest test_file_name.py::test_module_name --headed
-7. Run using n number of worker - pytest -n number_of_worker
+## 🚀 Getting Started
 
+### Required Packages
+Install all dependencies:
 
+```bash
+pip install pytest
+pip install pytest-playwright
+pip install pytest-xdist
+playwright install
+```
 
-### pytest.fixture
-    - A fixture in testing is a setup that provides a known precondition before running a test and ensures proper cleanup after the test. Fixtures help maintain test reliability by ensuring each test starts with a consistent state.
-        -- scope="function" -> The fixture is created before each test function and destroyed after the function completes. Useful when you need fresh data for every test.
-        -- scope="class" -> The fixture is created once per test class and is shared among all test methods within the class. Useful when test cases in a class can share the same setup.
-        -- scope="module" -> The fixture is created once per module (file) and shared across all test functions/classes in that module. Useful when tests in the same file can reuse the same setup.
-        -- scope="session" -> The fixture is created once for the entire pytest session (across multiple test files). Useful for database connections, API authentication, or other expensive setups.
+---
 
-### @pytest.mark
-    - pytest.mark.skip is a function that skips a test or a fixture during execution. It is useful when a test should not run under certain conditions.
-    - @pytest.mark.test_name @pytest.mark.smoke
+## 💻 Running Tests
 
+### Basic Commands
+NB: If your test files are in a different directory, navigate to that directory first and then run the following commands:
 
+| Action                              | Command |
+|-------------------------------------|---------|
+| Run all tests                       | `pytest -s` |
+| Run a specific file                 | `pytest test_file.py` |
+| Run a specific class/module         | `pytest test_file.py::TestClassName` |
+| Run by test method name             | `pytest -k "partial_method_name"` |
+| Run tests with marker (e.g., smoke) | `pytest -m smoke -v` |
+| Run in headed mode (for UI)         | `pytest test_file.py::test_case --headed` |
+| Run tests in parallel using 4 worker processes              | `pytest -n 4` |
 
+---
+
+## 🛠️ Pytest Fixtures
+
+Fixtures are reusable setups used before and after tests.
+
+### Example:
+```python
+@pytest.fixture(scope="function")
+def setup_data():
+    # Setup logic
+    yield
+    # Teardown logic
+```
+
+### Fixture Scopes:
+- `function`: (default) Runs before and after each test function.
+- `class`: Runs once per class, shared within the class.
+- `module`: Runs once per file, shared across functions/classes.
+- `session`: Runs once for the entire test session. Useful for DB/API setup.
+
+---
+
+## 🏷️ Pytest Markers
+
+Markers help organize and filter tests.
+
+### Common Markers:
+- `@pytest.mark.skip` – Skip a test.
+- `@pytest.mark.smoke` – Tag a test as part of smoke suite.
+- `@pytest.mark.regression` – Tag a test as part of regression suite.
+
+### Example:
+```python
+@pytest.mark.smoke
+def test_login():
+    assert True
+```
+
+Run with:
+```bash
+pytest -m smoke -v
+```
+
+---
+
+## 🔄 Parallel Test Execution
+
+To speed up test execution using multiple CPUs:
+
+```bash
+pytest -n 4
+```
+
+Make sure `pytest-xdist` is installed.
+
+---
+
+## 🚫 Skipping Tests
+
+Use skip marker to exclude a test:
+```python
+@pytest.mark.skip(reason="Not implemented yet")
+def test_feature():
+    pass
+```
+
+---
+
+## 📁 Folder Structure
+
+```
+project_root/
+├── tests/
+│   ├── test_login.py
+│   └── test_api.py
+├── fixtures/
+│   └── common_fixtures.py
+├── conftest.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
+Happy Testing! 🚀
 
