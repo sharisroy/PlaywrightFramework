@@ -1,0 +1,10 @@
+*.html
+/reports/
+/__pycache__/
+*.log
+# Ignore the whole .idea folder
+.idea/
+
+# Except these files (if needed)
+!.idea/codeStyles
+!.idea/runConfigurations
