@@ -1,13 +1,15 @@
 # Playwright API Testing with Pytest
 
-This project uses **Playwright** with **Pytest** for automated API testing. It supports structured test execution, fixtures, markers, parallel testing, and generates reports for further investigation.
+This project utilizes **Playwright** in combination with **Pytest** to provide an efficient, scalable, and automated framework for **API testing**. The setup supports structured test execution, fixtures, markers, parallel test execution, and generates detailed reports for effective analysis and investigation of test results.
+
+While **Playwright** is traditionally used for browser automation, it is leveraged here for API testing without requiring the launch of a browser. This makes Playwright a versatile tool for interacting with APIs. It supports a variety of HTTP methods such as **GET, POST, PUT, PATCH**, and **DELETE**, along with powerful capabilities for data handling, assertions, and environment configuration. This makes it an ideal choice for comprehensive **end-to-end API validation**.
 
 ---
 
 ## 🚀 Getting Started
 
 ### Required Packages
-Install all dependencies:
+To get started, you need to install the necessary dependencies. Run the following commands:
 
 ```bash
 pip install pytest
@@ -21,23 +23,23 @@ playwright install
 ## 💻 Running Tests
 
 ### Basic Commands
-NB: If your test files are in a different directory, navigate to that directory first and then run the following commands:
+If your test files are located in a different directory, make sure to navigate to that directory first. Then, use the following commands to run your tests:
 
 | Action                              | Command |
 |-------------------------------------|---------|
 | Run all tests                       | `pytest -s` |
-| Run a specific file                 | `pytest test_file.py` |
-| Run a specific class/module         | `pytest test_file.py::TestClassName` |
-| Run by test method name             | `pytest -k "partial_method_name"` |
-| Run tests with marker (e.g., smoke) | `pytest -m smoke -v` |
-| Run in headed mode (for UI)         | `pytest test_file.py::test_case --headed` |
-| Run tests in parallel using 4 worker processes              | `pytest -n 4` |
+| Run a specific test file            | `pytest test_file.py` |
+| Run a specific test class/module    | `pytest test_file.py::TestClassName` |
+| Run a test by method name           | `pytest -k "partial_method_name"` |
+| Run tests with a specific marker (e.g., smoke) | `pytest -m smoke -v` |
+| Run in headed mode (useful for UI testing) | `pytest test_file.py::test_case --headed` |
+| Run tests in parallel using 4 worker processes | `pytest -n 4` |
 
 ---
 
 ## 🛠️ Pytest Fixtures
 
-Fixtures are reusable setups used before and after tests.
+**Fixtures** are reusable setup routines used before and after tests to ensure that the necessary environment is in place.
 
 ### Example:
 ```python
@@ -49,21 +51,21 @@ def setup_data():
 ```
 
 ### Fixture Scopes:
-- `function`: (default) Runs before and after each test function.
-- `class`: Runs once per class, shared within the class.
-- `module`: Runs once per file, shared across functions/classes.
-- `session`: Runs once for the entire test session. Useful for DB/API setup.
+- **`function`** (default): Runs before and after each test function.
+- **`class`**: Runs once per test class, shared across all test functions in the class.
+- **`module`**: Runs once per module (test file), shared across all test functions and classes in the module.
+- **`session`**: Runs once per test session, ideal for setup tasks like initializing a database or API connection.
 
 ---
 
 ## 🏷️ Pytest Markers
 
-Markers help organize and filter tests.
+Markers are used to tag and organize tests for easier filtering and execution.
 
 ### Common Markers:
-- `@pytest.mark.skip` – Skip a test.
-- `@pytest.mark.smoke` – Tag a test as part of smoke suite.
-- `@pytest.mark.regression` – Tag a test as part of regression suite.
+- **`@pytest.mark.skip`**: Skip a test.
+- **`@pytest.mark.smoke`**: Tag a test as part of the smoke test suite.
+- **`@pytest.mark.regression`**: Tag a test as part of the regression test suite.
 
 ### Example:
 ```python
@@ -72,28 +74,29 @@ def test_login():
     assert True
 ```
 
-Run with:
+Run the **smoke** suite with:
 ```bash
 pytest -m smoke -v
 ```
 
 ---
 
-## 🔄 Parallel Test Execution
+## ♻️ Parallel Test Execution
 
-To speed up test execution using multiple CPUs:
+To speed up test execution by running tests in parallel across multiple CPUs:
 
 ```bash
 pytest -n 4
 ```
 
-Make sure `pytest-xdist` is installed.
+Make sure you have `pytest-xdist` installed to enable parallel execution.
 
 ---
 
 ## 🚫 Skipping Tests
 
-Use skip marker to exclude a test:
+To exclude a test temporarily, you can use the `skip` marker:
+
 ```python
 @pytest.mark.skip(reason="Not implemented yet")
 def test_feature():
@@ -103,6 +106,8 @@ def test_feature():
 ---
 
 ## 📁 Project Structure
+
+Here’s an example of the project structure:
 
 ```
 project_root/
