@@ -1,5 +1,4 @@
 *.html
-/reports/
 /__pycache__/
 *.log
 # Ignore the whole .idea folder
