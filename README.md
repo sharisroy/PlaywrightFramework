@@ -1,12 +1,11 @@
 # Playwright API Testing with BDD (pytest-bdd)
 
-This project uses **Playwright** with **Pytest-BDD** for automated API testing. It supports BDD-style test scenarios, structured execution, fixtures, markers, parallel testing, and generates reports for further investigation.
-
----
+This project uses Playwright with Pytest-BDD for automated API testing. It supports BDD-style test scenarios, structured execution, fixtures, markers, parallel testing, and generates reports for further investigation.
 
 ## 🚀 Getting Started
 
 ### Required Packages
+
 Install all dependencies:
 
 ```bash
@@ -15,15 +14,21 @@ pip install pytest-playwright
 pip install pytest-bdd
 pip install pytest-xdist
 playwright install
-pip install pytest-bdd
-
 ```
+
+To generate `requirements.txt` with all installed dependencies, use:
+
+```bash
+pip freeze > requirements.txt
+```
+
+This command will create a `requirements.txt` file with all the necessary packages.
 
 ---
 
-## 💻 Running Tests
+### 💻 Running Tests
 
-### Basic Commands
+#### Basic Commands
 
 | Action | Command |
 |--------|---------|
@@ -36,11 +41,12 @@ pip install pytest-bdd
 
 ---
 
-## 🧪 Feature Files (BDD)
+### 🦢 Feature Files (BDD)
 
 Feature files describe your test cases in plain English.
 
-### Example: `features/login.feature`
+#### Example: `features/login.feature`
+
 ```gherkin
 Feature: Login Functionality
 
@@ -52,10 +58,11 @@ Feature: Login Functionality
 
     Examples:
       | userEmail              | userPassword |
-      | sqa.haris@gmail.com    | H@12345bd    |
+      | sqa.haris@gmail.com     | H@12345bd    |
 ```
 
-### Example: `features/order.feature`
+#### Example: `features/order.feature`
+
 ```gherkin
 Feature: Order Creation
 
@@ -72,17 +79,14 @@ Feature: Order Creation
 
 ---
 
-## 🛠️ Fixtures & Setup
+### 🛠️ Fixtures & Setup
 
 Fixtures are reusable setups used before and after tests.
 
 Defined in `conftest.py`, e.g.:
 
-- `api_context`: Initializes Playwright request context
-- `auth_token`: Authenticates and returns a token
-- `latest_order_id`: Gets the latest order ID
+#### `api_context`: Initializes Playwright request context
 
-### Example:
 ```python
 @pytest.fixture(scope="module")
 def api_context(playwright: Playwright):
@@ -91,25 +95,47 @@ def api_context(playwright: Playwright):
     request_context.dispose()
 ```
 
+#### `auth_token`: Authenticates and returns a token
+
+```python
+@pytest.fixture(scope="module")
+def auth_token(api_context):
+    response = api_context.post('/auth', json=credentials)
+    return response.json()['token']
+```
+
+#### `latest_order_id`: Gets the latest order ID
+
+```python
+@pytest.fixture(scope="module")
+def latest_order_id(api_context):
+    response = api_context.get('/orders')
+    return response.json()[0]['id']
+```
+
 ---
 
-## 🏷️ Pytest Markers
+### 🏷️ Pytest Markers
 
 Markers help organize and filter tests.
 
-### Common Markers:
-- `@pytest.mark.skip` – Skip a test.
-- `@pytest.mark.smoke` – Tag a test as part of smoke suite.
-- `@pytest.mark.regression` – Tag a test as part of regression suite.
+#### Common Markers:
+
+```python
+@pytest.mark.skip  # Skip a test.
+@pytest.mark.smoke  # Tag a test as part of smoke suite.
+@pytest.mark.regression  # Tag a test as part of regression suite.
+```
 
 Run with:
+
 ```bash
 pytest -m smoke -v
 ```
 
 ---
 
-## 🔄 Parallel Test Execution
+### 🔄 Parallel Test Execution
 
 To speed up test execution using multiple CPUs:
 
@@ -121,9 +147,9 @@ Make sure `pytest-xdist` is installed.
 
 ---
 
-## 📁 Folder Structure (BDD Version)
+### 📁 Folder Structure (BDD Version)
 
-```
+```plaintext
 project_root/
 ├── features/
 │   ├── login.feature
@@ -139,8 +165,6 @@ project_root/
 ├── requirements.txt
 └── README.md
 ```
-
----
 
 Happy Testing! 🚀
 
